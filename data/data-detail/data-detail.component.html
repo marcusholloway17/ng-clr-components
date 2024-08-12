@@ -1,0 +1,117 @@
+<ng-container
+  *ngTemplateOutlet="beforeDetailRef; context: { $implicit: data }"
+></ng-container>
+<ng-container *ngIf="['vertical', 'v'].indexOf(layout) != -1; else hLayout">
+  <table class="table inset-table table-compact">
+    <tbody>
+      <tr
+        *ngFor="let column of columns"
+        [ngStyle]="column.style?.styles"
+        [class]="column.style?.cssClass ?? ''"
+      >
+        <th class="left">
+          <ng-container
+            *ngIf="
+              column.title
+                | transform : column.titleTransform
+                | pipeResult as result
+            "
+          >
+            <ng-container *ngIf="result.value | isAsync; else noAsyncRef">
+              {{ result.value | async }}
+            </ng-container>
+            <ng-template #noAsyncRef>
+              {{ result.value }}
+            </ng-template>
+          </ng-container>
+        </th>
+        <td *ngFor="let item of data | array" class="right">
+          <ng-container
+            *ngIf="
+              item
+                | propValue : column.field
+                | transform : column.transform
+                | pipeResult as result
+            "
+          >
+            <ng-container *ngIf="result.value | isAsync; else noAsyncRef">
+              <ng-container
+                *ngTemplateOutlet="
+                  preview ?? defaultPreview;
+                  context: { $implicit: result.value | async, column }
+                "
+              ></ng-container>
+            </ng-container>
+            <ng-template #noAsyncRef>
+              <ng-container
+                *ngTemplateOutlet="
+                  preview ?? defaultPreview;
+                  context: { $implicit: result.value, column }
+                "
+              ></ng-container>
+            </ng-template>
+          </ng-container>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</ng-container>
+<ng-template #hLayout>
+  <table class="table inset table-compact">
+    <thead>
+      <tr>
+        <th *ngFor="let column of columns" class="left">
+          <ng-container
+            *ngIf="
+              column.title
+                | transform : column.titleTransform
+                | pipeResult as result
+            "
+          >
+            <ng-container *ngIf="result.value | isAsync; else noAsyncRef">
+              {{ result.value | async }}
+            </ng-container>
+            <ng-template #noAsyncRef>
+              {{ result.value }}
+            </ng-template>
+          </ng-container>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of data | array">
+        <td *ngFor="let column of columns" class="left">
+          <ng-container
+            *ngIf="
+              item
+                | propValue : column.field
+                | transform : column.transform
+                | pipeResult as result
+            "
+          >
+            <ng-container *ngIf="result.value | isAsync; else noAsyncRef">
+              <ng-container
+                *ngTemplateOutlet="
+                  preview ?? defaultPreview;
+                  context: { $implicit: result.value | async, column }
+                "
+              ></ng-container>
+            </ng-container>
+            <ng-template #noAsyncRef>
+              <ng-container
+                *ngTemplateOutlet="
+                  preview ?? defaultPreview;
+                  context: { $implicit: result.value, column }
+                "
+              ></ng-container>
+            </ng-template>
+          </ng-container>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</ng-template>
+<ng-template #defaultPreview let-value> {{ value }} </ng-template>
+<ng-container
+  *ngTemplateOutlet="afterDetailRef; context: { $implicit: data }"
+></ng-container>

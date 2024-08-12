@@ -1,0 +1,11 @@
+.spinner-overlay {
+  z-index: var(--spinner-overlay-z-index, 1052);
+  position: absolute;
+  top: 0;
+  width: var(--overlay-spinner-width, 100vw);
+  height: var(--overlay-spinner-height, 100vh);
+  background: var(--overlay-spinner-bg-color, rgba(255, 255, 255, 0.5));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

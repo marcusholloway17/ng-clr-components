@@ -1,0 +1,1 @@
+export { canDeactivateComponent } from './can-deactivate.guard';

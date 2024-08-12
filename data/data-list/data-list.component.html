@@ -1,0 +1,74 @@
+<ng-container *ngIf="config.datagrid">
+    <!-- Data list container -->
+    <ng-container *ngIf="config.url ?? !!config.datagrid?.url || !!config.actions?.list?.url || !!url">
+        <ng-container
+            *ngTemplateOutlet="gridViewRef ?? defaultGridViewRef; context: {handleCachedQuery: handleCachedQuery.bind(this), handleDgStateChanges: handleDgStateChanges.bind(this), handleDetailPaneChange: handleDetailPaneChange.bind(this), onRefreshDatagrid: handleRefreshDatagrid.bind(this), config, dgState, search}"></ng-container>
+    </ng-container>
+</ng-container>
+
+<ng-template #defaultGridViewRef let-handleCachedQuery="handleCachedQuery"
+    let-handleDgStateChanges="handleDgStateChanges" let-handleDetailPaneChange="handleDetailPaneChange"
+    let-onRefreshDatagrid="onRefreshDatagrid" let-config="config" let-dgState="dgState" let-search="search">
+    <ngx-datagrid [intercept]="config.actions?.list?.intercept" (cached-query)="handleCachedQuery($event)"
+        [search-value]="search" [url]="config.datagrid.url ?? config.actions?.list?.url ?? config.url ?? url"
+        [columns]="config.datagrid.columns | asObservable | async| asAny" [query]="config.datagrid.query"
+        [action-bar]="actionBar ? actionBarTpl : defaultActionBar" [state]="dgState"
+        [overflow]="overflow ? overflowTpl : (0 !== overflowActions.length ? defaultOverflow : undefined)"
+        [single-selection]="config.datagrid.singleSelection" [class]="config.datagrid.class"
+        [selectable]="config.datagrid.selectable" [column-title-transform]="config.datagrid.transformColumnTitle"
+        [row-class]="config.datagrid.rowClass" [placeholder]="'placeholder'|commonString:'datagrid'"
+        [error-text]="'error'|commonString:'datagrid'" [loading-text]="'loading'|commonString:'datagrid'"
+        [detail-pane]="showDetailPane && !!detailPaneRef ? detailPaneRef : undefined"
+        (refresh-grid)="onRefreshDatagrid($event)" (dgStateChange)="handleDgStateChanges($event)"
+        (detail-change)="handleDetailPaneChange($event)"
+        (dgItemClick)="onDgItemClicked($event, config?.datagrid?.click)">
+
+    </ngx-datagrid>
+</ng-template>
+
+<!-- Overflow template -->
+<ng-template #overflowTpl let-item="item">
+    <ng-container
+        *ngTemplateOutlet="overflow; context: {$implicit: item, item, actions: overflowActions, handleAction: handleAction.bind(this)}"></ng-container>
+</ng-template>
+
+<!-- Default overflow template -->
+<ng-template #defaultOverflow let-item="item">
+    <ng-container *ngFor="let action of overflowActions">
+        <button [disabled]="item|disabledAction:action.disabled" *ngIf="action.remove ? action.remove(item) : true"
+            class="action-item" (click)="handleAction($event, item, action)">{{action.metadata.title | actionTitle:item
+            | commonString |
+            uppercase}}</button>
+
+    </ng-container>
+</ng-template>
+
+<!-- Action bar template -->
+<ng-template #actionBarTpl let-item="item" let-refresh="refresh">
+    <ng-container
+        *ngTemplateOutlet="overflow; context: {$implicit: item, item, actions: actionBarActions, handleAction: handleAction.bind(this)}"></ng-container>
+</ng-template>
+
+
+<!-- Default action bar template -->
+<ng-template #defaultActionBar let-selected="selected" let-refresh="refresh">
+    <div class="btn-group">
+        <button type="button" class="btn btn-primary" (click)="refresh($event)">
+            <svg version="1.1" viewBox="0 0 36 36" preserveAspectRatio="xMidYMid meet"
+                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <title>refresh-line</title>
+                <path
+                    d="M22.4,11.65a1.09,1.09,0,0,0,1.09,1.09H34.43V1.81a1.09,1.09,0,1,0-2.19,0V8.95a16.41,16.41,0,1,0,1.47,15.86,1.12,1.12,0,0,0-2.05-.9,14.18,14.18,0,1,1-1.05-13.36H23.5A1.09,1.09,0,0,0,22.4,11.65Z" />
+                <rect x="0" y="0" width="36" height="36" fill-opacity="0" />
+            </svg>
+            {{ refreshText }}
+        </button>
+        <ng-container *ngFor="let action of actionBarActions">
+            <button [disabled]="selected|disabledAction:action.disabled"
+                *ngIf="action.remove ? action.remove(selected) : true" class="btn btn-primary"
+                (click)="handleAction($event, selected, action)">
+                {{action.metadata.title| actionTitle:selected | commonString | uppercase}}
+            </button>
+        </ng-container>
+    </div>
+</ng-template>

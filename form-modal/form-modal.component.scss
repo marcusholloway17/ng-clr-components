@@ -1,0 +1,11 @@
+// :host ::ng-deep .ngx-form-control {
+//     line-height: 1rem !important;
+// }
+
+:host ::ng-deep .modal-body {
+    margin: 1.5rem 0;
+}
+
+:host ::ng-deep .modal-content {
+    margin: 32px;
+}

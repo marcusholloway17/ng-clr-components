@@ -1,0 +1,48 @@
+<clr-datagrid #clrgrid [ngStyle]="{height}">
+    <!-- DATA GRID COLUMNS -->
+    <ng-container *ngFor="let column of columns">
+        <clr-dg-column class="grid-header" [clrDgColType]="column.type| columType">
+            {{ column.title |transform : (column.transformTitle ?? 'uppercase') }}
+        </clr-dg-column>
+    </ng-container>
+    <!--\ DATA GRID COLUMNS -->
+
+    <!-- DATA GRID ROWS -->
+    <ng-container *clrDgItems="let item of state.indexes">
+        <ng-container
+            *ngTemplateOutlet="defaultRowRef; context: { $implicit: item | gridRecord:columns:disabled, rowIndex: item, rowValue: (item|at:state.records), lastIndex: (state.records|lastRecordIndex) }"
+            ngProjectAs="clr-dg-row"></ng-container>
+    </ng-container>
+
+    <!-- TODO: Make the output compatible with clr-row -->
+    <ng-template #defaultRowRef let-value let-rowIndex="rowIndex" let-rowValue="rowValue" let-lastIndex="lastIndex">
+        <ng-container *ngIf="!(rowIndex|isDeleted:deleted)">
+            <clr-dg-row>
+                <clr-dg-action-overflow *ngIf="!disabled">
+                    <button class="action-item" (click)="onRemoveRecord($event, rowValue, rowIndex)">{{'Supprimer la
+                        ligne' |
+                        uppercase}}</button>
+                </clr-dg-action-overflow>
+                <ng-container *ngFor="let config of value.cells">
+                    <ng-container *ngIf="config.column.name |cellError:state.errors:rowIndex as cError">
+                        <clr-dg-cell (click)="onCellClicked($event, config.index, rowIndex)" [class.disabled]="disabled"
+                            [class.error]="cError|hasError"
+                            [attr.data-text]="(cError|hasError) && (cError.errors) ? (cError|firstError|commonString|parseStr:(cError|firstErrorParams)) : ''"
+                            [class]="state.selected && state.selected.x === config.index && state.selected.y === rowIndex ? 'edit': 'view'">
+                            <ngx-grid-cell [class.error]="cError|hasError" #gridCelln role="tooltip"
+                                aria-haspopup="true" [textViewRef]="textViewRef" [optionViewRef]="optionViewRef"
+                                [class]="state.selected && state.selected.x === config.index && state.selected.y === rowIndex ? 'edit': 'view'"
+                                [config]="config" (modeChange)="onCellModeChange($event)"
+                                (selectionChange)="onSelectionChange($event, rowIndex, value.cells?.length ?? 0)"
+                                [record]="rowValue" [value]="rowValue | value:config.column.name:''"
+                                (valueChange)="onValueChange(rowIndex, $event, columns, state.indexes)"
+                                [mode]="state.selected && state.selected.x === config.index && state.selected.y === rowIndex ? 'edit': 'view'">
+                            </ngx-grid-cell>
+                        </clr-dg-cell>
+                    </ng-container>
+                </ng-container>
+            </clr-dg-row>
+        </ng-container>
+    </ng-template>
+    <!--\ DATA GRID ROWS -->
+</clr-datagrid>

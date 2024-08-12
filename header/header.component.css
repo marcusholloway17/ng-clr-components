@@ -1,0 +1,108 @@
+/* Basic tags styles */
+a {
+    touch-action: manipulation;
+}
+/*! Basic tags styles */
+
+/* Header container styles */
+:host ::ng-deep header,
+header,
+:host ::ng-deep .header,
+.header {
+    display: flex;
+    white-space: nowrap;
+    color: var(--header-font-color, #fafafa);
+    background-color: var(--header-bg-color, #333);
+    height: var(--header-height, 3rem);
+}
+
+:host ::ng-deep header.header-basic,
+header.header-basic,
+:host ::ng-deep .header.header-basic .header.header-basic {
+    background-color: var(--header-basic-bg-color, #00364d);
+}
+
+/*! Header container styles */
+.module {
+    margin-left: 1rem;
+}
+
+.dropdown-toggle {
+    display: inline;
+}
+
+/* Header navigation links */
+:host ::ng-deep .nav-link,
+.nav-link {
+    font-size: .8rem !important;
+}
+
+:host ::ng-deep .links__nav-link,
+.links__nav-link {
+    position: relative;
+    padding: .9rem 1.2rem;
+    color: var(--header-nav-link-font-color, #fff);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.links__nav-link,
+:host ::ng-deep .links__nav-link .ngx-azl-dropdown-header {
+    opacity: var(--header-nav-link-opacity, 1);
+}
+
+/*! Header navigation links*/
+
+/* Dropdown menu and dropdown menu items */
+:host ::ng-deep .ngx-azl-dropdown-menu,
+.ngx-azl-dropdown-menu {
+    background: var(--dropdown-nav-bg-color, #fff) !important;
+    border-radius: var(--dropdown-border-radius, 0) !important;
+    margin-top: 0;
+    min-height: 4.2rem;
+    margin-left: -1.2rem;
+}
+
+:host ::ng-deep .ngx-azl-dropdown-text,
+.ngx-azl-dropdown-text {
+    border-bottom: none !important;
+}
+
+
+.ngx-azl-dropdown-text .icon,
+.ngx-azl-dropdown-text svg {
+    margin-left: .5rem;
+}
+
+/*! Dropdown menu and dropdown menu items */
+
+:host ::ng-deep header *[app-links],
+header *[app-links] {
+    margin-top: var(---header-icon-margin-top, .5rem);
+    margin-left: var(---header-icon-margin-left, .5rem);
+}
+
+:host ::ng-deep .ngx-azl-dropdown.menu .ngx-azl-dropdown-menu,
+:host ::ng-deep .ngx-azl-dropdown-menu.right {
+    margin-top: var(---header-icon-dropdown-margin-top, .4rem);
+}
+
+:host ::ng-deep .ngx-azl-dropdown-menu.right {
+    right: var(--dropdown-menu-right-offset, 0.5rem) !important;
+    left: auto !important;
+}
+
+:host ::ng-deep .header-action-dropdown .ngx-azl-dropdown-menu {
+    min-width: 7rem;
+    max-width: 18rem;
+    margin-top: var(--header-action-dropdown-menu-margin-top, .9rem);
+}
+
+:host ::ng-deep .ngx-azl-dropdown-menu {
+    padding: var(--header-action-dropdown-menu-padding, .6rem 0);
+    min-height: auto;
+}
+
+.header-actions-content {
+    display: flex;
+}

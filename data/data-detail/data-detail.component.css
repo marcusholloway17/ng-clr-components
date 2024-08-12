@@ -1,0 +1,46 @@
+:host table {
+    margin-bottom: 16px;
+}
+
+.left {
+    text-align: left;
+}
+
+.right {
+    text-align: right;
+}
+
+th,
+td {
+    padding-top: .5rem !important;
+    padding-bottom: .5rem !important;
+    padding-left: .7rem !important;
+    padding-right: .7rem !important;
+}
+
+th {
+    font-size: .7rem;
+    font-weight: bold;
+}
+
+td {
+    font-size: .7rem;
+    font-weight: 400;
+}
+
+.table th,
+:host ::ng-deep .table th {
+  border-top-style: solid;
+  line-height: var(--clr-table-data-cell-line-height, 0.7rem);
+  border-top-width: var(--clr-table-borderwidth, 0.05rem);
+  border-top-color: var(--clr-tablerow-bordercolor, hsl(198, 0%, 91%));
+  vertical-align: top;
+  border-bottom-style: none;
+}
+
+.table,
+:host ::ng-deep .table {
+  border-top-color: transparent;
+  border-left-color: transparent;
+  border-right-color: transparent;
+}

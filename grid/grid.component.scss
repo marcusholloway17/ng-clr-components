@@ -1,0 +1,127 @@
+:host ::ng-deep .datagrid-table .datagrid-placeholder-container {
+  padding: 0;
+  margin: 0;
+  border-top-style: none;
+}
+
+:host ::ng-deep .datagrid,
+:host ::ng-deep .datagrid-footer {
+  padding: 0;
+  margin: 0;
+  border-left-style: var(--grid-border-left-style, none);
+  border-right-style: var(--grid-border-right-style, none);
+}
+
+:host ::ng-deep .datagrid-header .datagrid-row-scrollable {
+  /* TODO: Set the background color based on the theme value */
+  background: #fff;
+}
+
+.grid-lines-viewport {
+  height: 100vh;
+}
+
+:host ::ng-deep .datagrid .datagrid-table .datagrid-cell,
+.datagrid .datagrid-table .datagrid-cell {
+  padding: 0.55rem 0px 0px 0px;
+}
+
+:host ::ng-deep .datagrid .datagrid-table .datagrid-cell.edit,
+.datagrid .datagrid-table .datagrid-cell.edit {
+  cursor: text;
+}
+
+:host ::ng-deep .clr-input,
+:host ::ng-deep .clr-select-wrapper,
+:host ::ng-deep .clr-select,
+:host ::ng-deep .clr-input:focus,
+:host ::ng-deep .clr-select:focus {
+  width: 100%;
+  margin-bottom: 0px;
+}
+
+:host ::ng-deep .clr-input,
+:host ::ng-deep .clr-select {
+  border-bottom: none;
+  border: none;
+  background: none;
+  transition: none;
+}
+
+:host ::ng-deep .clr-input:focus,
+:host ::ng-deep .clr-select:focus {
+  border-bottom: none;
+  border: none;
+  background: none;
+  transition: none;
+}
+
+:host ::ng-deep .datagrid-table .datagrid-cell .datagrid-action-toggle {
+  margin: 6px;
+}
+
+.grid-header {
+  font-weight: bold;
+}
+
+:host ::ng-deep .datagrid .datagrid-table .datagrid-cell.view {
+  overflow-x: hidden;
+  border-left: 0.5px solid #b5b5b5;
+}
+
+:host ::ng-deep .datagrid .datagrid-table .datagrid-cell {
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+:host ::ng-deep .datagrid .datagrid-table .datagrid-cell.edit {
+  outline: var(--grid-cell-edit-mode-color, #1a77c9);
+  border-left: 2px solid var(--grid-cell-edit-mode-color, #1a77c9);
+  border: 2px solid var(--grid-cell-edit-mode-color, #1a77c9);
+}
+
+:host ::ng-deep .datagrid .datagrid-table .datagrid-cell.view.error {
+  outline: var(--grid-cell-view-mode-error-color, #c93a1a);
+  border-left: 2px solid var(--grid-cell-view-mode-error-color, #c93a1a);
+  border: 2px solid var(--grid-cell-view-mode-error-color, #c93a1a);
+}
+
+.datagrid-row:hover,
+.datgrid-row-master:hover,
+.datagrid-row-sticky:hover {
+  background: #fafafa80;
+}
+
+:host ::ng-deep .datagrid-table .datagrid-cell.disabled,
+.datagrid-table .datagrid-cell.disabled {
+  margin: 6px;
+}
+
+/* Tooltip container */
+ngx-grid-cell {
+  display: block;
+}
+
+clr-dg-cell.view.error:before {
+  content: attr(data-text); /* here's the magic */
+  position: fixed;
+  /* vertically center */
+  // top: 50%;
+  transform: translateY(-50%);
+  /* move to right */
+  margin-left: -12px;
+  margin-top: -24px;
+  /* basic styles */
+  width: 200px;
+  padding: var(--grid-tooltip-padding, 8px);
+  border-radius: var(--grid-tooltip-border-radius, 4px);
+  background: var(--grid-tooltip-bg-color, #000);
+  color: var(--grid-tooltip-color, #fff);
+  text-align: center;
+  font-weight: 300;
+  z-index: 1900;
+  display: none; /* hide by default */
+}
+
+clr-dg-cell.view.error:hover:before {
+  display: block;
+}

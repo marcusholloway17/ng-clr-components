@@ -1,0 +1,9 @@
+<!-- Case the autoclose property is defined, and value === total hide the progress snackbar -->
+<ng-container *ngIf="total">
+    <div class="progress-snackbar" [class.show]="!hidden || (autoclose && value !== total)">
+        <div class="progress-snackbar-content">
+            <span class="text"> {{text}} </span>
+            <div class="percentage"><span>{{ value | percent:total}}%</span></div>
+        </div>
+    </div>
+</ng-container>

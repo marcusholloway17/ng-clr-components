@@ -1,0 +1,16 @@
+.cell-value.number {
+  text-align: right;
+  margin-right: 4px;
+}
+
+.cell-value:not(.number) {
+  text-align: left;
+  margin-left: 4px;
+}
+
+.cell-value {
+  // position: relative;
+  display: block;
+  font-size: 12px;
+  // bottom: -11px;
+}

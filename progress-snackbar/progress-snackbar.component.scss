@@ -1,0 +1,40 @@
+.progress-snackbar {
+  width: 320px;
+  min-height: 60px;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  top: 8px;
+  left: calc(50% - 160px);
+  background-color: var(--import-progress-snack-bg-color, #f7d67c);
+  color: var(--import-progress-snack-color, hsl(214.29, 80.77%, 30.59%));
+  z-index: var(--import-progress-snackar-z-index, 2050) !important;
+  transition: position 1s ease;
+  visibility: hidden;
+  padding: 10px;
+  box-shadow: 0.1em 0.1em 0.3em rgba(0, 0, 0, 0.3);
+}
+
+.progress-snackbar.show {
+  visibility: visible;
+}
+
+.progress-snackbar-content {
+  text-align: center;
+}
+
+.progress-snackbar .text,
+.progress-snackbar .percentage {
+  display: block;
+  color: var(
+    --import-progress-snack-color,
+    hsl(214.29, 80.77%, 30.59%)
+  ) !important;
+  font-size: var(--import-progress-snackar-font-size, 14px);
+  font-weight: 400;
+}
+
+.percentage {
+  line-height: 1.2rem;
+}

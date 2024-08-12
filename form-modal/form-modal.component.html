@@ -1,0 +1,21 @@
+<ngx-modal (openedChange)="onModalOpenedChanged($event)" [(opened)]="opened" [size]="size" [closeable]="closeable"
+    #modal>
+    <h3 class="modal-title">{{title}}</h3>
+    <div class="modal-body" *ngIf="form">
+        <ngx-smart-form #formRef (ready)="onReady($event)" [no-grid-layout]="noGridLayout" (error)="onError($event)" [autoupload]="true"
+            (submit)="onSubmit($event)" [form]="form" [autoSubmit]="false" [template]="controlTemplate">
+            <ng-template #controlTemplate let-config="value" let-control="control">
+                <ngx-clr-form-control class="ngx-smart-form-control" [hidden]="config.hidden" [control]="control"
+                    [inputConfig]="config"></ngx-clr-form-control>
+            </ng-template>
+        </ngx-smart-form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-danger" (click)="onCancel($event)">
+            {{ cancelText }}
+        </button>
+        <button class="btn btn-primary" (click)="formRef?.onSubmit($event)">
+            {{ submitText }}
+        </button>
+    </div>
+</ngx-modal>

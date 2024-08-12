@@ -1,0 +1,43 @@
+<ng-container *ngIf="dgState$">
+  <ngx-clr-smart-grid (dgItemClick)="onDgItemClick($event)" [pageResult]="dgState$ | async" (dgRefresh)="dgRefreshListener($event)" [config]="{
+    sizeOptions,
+    pageSize,
+    hasActionOverflow: overflow,
+    hasDetails: detailed,
+    useServerPagination: true,
+    transformColumnTitle,
+    selectable,
+    class: cssClass,
+    singleSelection,
+    projectRowClass: rowClass
+  }" [loading]="loading" [columns]="columns" (selectedChange)="selectedChange.emit($event)"
+    (detailChange)="detailChange.emit($event)" [placeholder]="state.placeholder">
+    <!-- Action Bar -->
+    <ng-container *ngIf="actionBarRef">
+      <ng-template #dgActionBar let-selected>
+        <div class="dg-header-container">
+          <ng-container *ngTemplateOutlet="
+            actionBarRef;
+            context: { selected, refresh: onDgRefresh.bind(this) }
+          "></ng-container>
+        </div>
+      </ng-template>
+    </ng-container>
+    <!-- Action Bar -->
+    <!-- Action overflow -->
+    <ng-container *ngIf="overflowRef">
+      <ng-template #dgActionOverflow let-item>
+        <ng-container *ngTemplateOutlet="overflowRef; context: { item: this.item }"></ng-container>
+      </ng-template>
+    </ng-container>
+    <!-- Action overflow -->
+    <!-- Dg Details pane body -->
+    <ng-container *ngIf="detailPaneRef">
+      <ng-template #dgDetailBody let-item>
+        <ng-container *ngTemplateOutlet="detailPaneRef; context: { $implicit: item }"></ng-container>
+      </ng-template>
+    </ng-container>
+    <!--\ Dg Details pane body -->
+  </ngx-clr-smart-grid>
+
+</ng-container>

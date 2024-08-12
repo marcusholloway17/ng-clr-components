@@ -1,0 +1,13 @@
+<!-- The Modal -->
+<div class="modal" [ngClass]="{opened: state.opened}">
+    <!-- Modal content -->
+    <div class="modal-content" [class]="state.size" [@fadeInOutSlideBottom]="state.opened ? 'open' : 'close'">
+        <span (click)="onClose($event)" *ngIf="closeable" class="close">&times;</span>
+        <ng-container
+            *ngTemplateOutlet="templateRef ?? defaultTemplateRef; context: {onClose: onClose.bind(this), $implicit: onClose.bind(this)}"></ng-container>
+    </div>
+</div>
+
+<ng-template #defaultTemplateRef>
+    <ng-content></ng-content>
+</ng-template>

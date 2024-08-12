@@ -1,0 +1,13 @@
+button svg {
+    width: var(--clr-btn-appearance-standard-icon-size, 0.8rem);
+    height: var(--clr-btn-appearance-standard-icon-size, 0.8rem);
+    font-weight: 500;
+    color: var(--clr-btn-primary-color, hsl(198, 0%, 100%));
+    fill: var(--clr-btn-primary-color, hsl(198, 0%, 100%));
+    margin-right: .15rem;
+    padding-top: 0rem;
+}
+
+.btn-group .btn , .btn-group .btn:not(:first-child), .btn {
+    border-radius: 0;
+}

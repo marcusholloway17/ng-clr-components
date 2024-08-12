@@ -1,0 +1,51 @@
+<header [class]="cssClass ?? 'header-basic'">
+    <ng-content select="[app-links]"></ng-content>
+    <div class="branding">
+        <ng-container *ngTemplateOutlet="brandingTemplate ?? defaultBrandingTemplate"></ng-container>
+    </div>
+    <div class="header-nav">
+        <ng-container *ngTemplateOutlet="navTemplate ?? defaultNavTemplate"></ng-container>
+    </div>
+    <div class="header-actions">
+        <ng-container *ngIf="actions$ | async as _actions">
+            <ng-container
+                *ngTemplateOutlet="defaultActionTpl; context: { $implicit: _actions| appendActions:actions }"></ng-container>
+        </ng-container>
+        <ng-template #defaultActionTpl let-actions>
+            <ng-container *ngIf="actions.length > 0">
+                <ng-container
+                    *ngTemplateOutlet="actionsRef; context: { $implicit: actions, actions: actions }"></ng-container>
+            </ng-container>
+        </ng-template>
+    </div>
+</header>
+
+<ng-template #defaultBrandingTemplate>
+    <span *ngIf="company" class="company title">{{ company }}</span>
+    <span *ngIf="module" class="module title"> </span>
+</ng-template>
+
+<ng-template #defaultNavTemplate>
+    <ng-container *ngIf="links">
+        <ng-container *ngFor="let link of links">
+            <ng-container *ngTemplateOutlet="linkTemplate ?? defaultLink; context: {link}"></ng-container>
+        </ng-container>
+    </ng-container>
+</ng-template>
+
+<ng-template #defaultLink let-link="link">
+    <ng-container *ngIf="link.links?.length > 0 else linkRef">
+        <ngx-header-dropdown-link [label]="link.label" [links]="link.links"
+            [navText]="defaultTextRef"></ngx-header-dropdown-link>
+    </ng-container>
+    <ng-template #linkRef>
+        <a [routerLink]="link.href" [routerLinkActive]="'active'" [class]="link.cssClass ?? ''"
+            class='nav-link nav-text'>
+            <ng-container
+                *ngTemplateOutlet="navTextRef ?? defaultTextRef; context: {label: link.label, $implicit: link.label}"></ng-container>
+        </a>
+    </ng-template>
+</ng-template>
+<ng-template #defaultTextRef let-label="label">
+    <span>{{ label }}</span>
+</ng-template>

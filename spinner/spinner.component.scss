@@ -1,0 +1,86 @@
+.spinner {
+  position: relative;
+  animation: rotate 1s linear infinite;
+}
+.spinner::before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  inset: 0px;
+  border-radius: 50%;
+  border: solid var(--spinner-color, #353535);
+  animation: prixClipFix 1s linear infinite;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes prixClipFix {
+  0% {
+    clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0);
+  }
+  25% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0);
+  }
+  50% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%);
+  }
+  75% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 100%);
+  }
+  100% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 0);
+  }
+}
+
+.spinner::before {
+  position: absolute;
+  box-sizing: border-box;
+  top: 50%;
+  left: 50%;
+}
+
+.spinner.medium::before {
+  width: 72px;
+  height: 72px;
+  border-width: 10px;
+}
+.spinner.small::before {
+  width: 48px;
+  height: 48px;
+  border-width: 5px;
+}
+
+/* Basic spinner styles */
+.spinner-basic {
+  border: solid var(--spinner-bg-color, #f3f3f3);
+  border-bottom-color: var(--spinner-color, #353535);
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+.spinner-basic.medium {
+  width: 72px;
+  height: 72px;
+  border-width: 10px;
+}
+
+.spinner-basic.small {
+  width: 48px;
+  height: 48px;
+  border-width: 5px;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

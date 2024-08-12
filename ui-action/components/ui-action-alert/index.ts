@@ -1,0 +1,1 @@
+export { UIActionAlertComponent } from './ui-action-alert.component';

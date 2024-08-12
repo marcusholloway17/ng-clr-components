@@ -1,0 +1,33 @@
+<ngx-viewport>
+  <ngx-header
+    *ngIf="!noHeader"
+    [links]="links | sublinks : path"
+    [company]="branding"
+    [module]="name"
+  >
+    <ngx-header-links
+      [links]="links | uiLinks"
+      app-links
+      (urlChange)="onUrlChange($event)"
+    ></ngx-header-links>
+    <ng-template #actions let-actions>
+      <ng-container
+        *ngTemplateOutlet="
+          actionsRef ?? defaultActionTplRef;
+          context: { $implicit: actions }
+        "
+      ></ng-container>
+    </ng-template>
+    <ng-template #defaultActionTplRef let-actions>
+      <div class="custom-header-actions">
+        <ng-content select="[customActions]"></ng-content>
+      </div>
+      <!-- Default view action reference -->
+      <ngx-header-actions [actions]="actions"> </ngx-header-actions>
+      <!--\ Default view action reference -->
+    </ng-template>
+  </ngx-header>
+  <div class="viewport-content">
+    <ng-content></ng-content>
+  </div>
+</ngx-viewport>

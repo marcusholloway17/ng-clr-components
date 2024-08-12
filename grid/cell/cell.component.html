@@ -1,0 +1,50 @@
+<ng-container *ngIf="config">
+    <ng-container *ngTemplateOutlet="config.column.type === 'option' ? optionsViewRef : viewRef"></ng-container>
+    <ng-template #optionsViewRef>
+        <ng-container *ngIf="config.column | asOption as  optionConfig">
+            <ng-container *ngIf="optionConfig?.options | options | async as values">
+                <ng-container *ngIf="mode === 'view' || config.frozen; else optionInputRef">
+                    <ng-container
+                        *ngTemplateOutlet="optionViewRef ?? defaultOptionViewRef; context: {$implicit: state, options: values, config, styles: config.styles, position: config.position, record, name: config.column.name, compute: config.column.compute, type: config.column.type}"></ng-container>
+                </ng-container>
+                <ng-template #defaultOptionViewRef let-param let-options="options" let-config="config"
+                    let-styles="styles" let-position="position" let-record="record" let-name="name"
+                    let-compute="compute" let-type="type">
+                    <span class="cell-value" [ngStyle]="styles" [tabindex]="position">{{
+                        (param|computeCellValue:record:name:compute) |
+                        option:options}}</span>
+                </ng-template>
+                <ng-template #optionInputRef>
+                    <div class="clr-select-wrapper">
+                        <select (keydown)="onKeyDown($event, config)" [tabindex]="config.position" #input
+                            (blur)="onBlur($event, config)" class="clr-select" [ngModel]="state"
+                            (ngModelChange)="onChange($event)">
+                            <option *ngFor="let item of values" [value]="item.id">{{ item.label }}</option>
+                        </select>
+                    </div>
+                </ng-template>
+            </ng-container>
+        </ng-container>
+    </ng-template>
+    <ng-template #viewRef>
+        <ng-container *ngIf="mode === 'view'|| config.frozen; else inputRef">
+            <ng-container
+                *ngTemplateOutlet="textViewRef ?? defaultViewRef; context: {$implicit: state, config, styles: config.styles, position: config.position, record, name: config.column.name, compute: config.column.compute, type: config.column.type}"></ng-container>
+        </ng-container>
+        <ng-template #defaultViewRef let-param let-config="config" let-styles="styles" let-position="position"
+            let-record="record" let-name="name" let-compute="compute" let-type="type">
+            <span class="cell-value" [class.number]="type === 'number'" [ngStyle]="styles"
+                [tabindex]="position">{{(param|computeCellValue:record:name:compute)
+                | transform:config.column.transform ?? []}}</span>
+        </ng-template>
+        <ng-template #inputRef>
+            <input (keypress)="onKeyPress($event, config.column.type)" (keydown)="onKeyDown($event, config)"
+                [tabindex]="config.position" #input (blur)="onBlur($event, config)"
+                [type]="config.column.type === 'number' ? 'text': config.column.type" class="clr-input"
+                [ngModel]="config.column.type === 'number' ? (state|parseInt) : state"
+                (ngModelChange)="onChange($event)" />
+        </ng-template>
+    </ng-template>
+    <!-- Any datagrid added content -->
+    <ng-content></ng-content>
+</ng-container>

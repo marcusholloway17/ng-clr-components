@@ -1,0 +1,72 @@
+<ngx-view [no-header]="noHeader" [links]="links" [path]="path" [branding]="branding" [name]="'name' | commonString : name">
+    <ngx-data #dataRef [delete-complete-text]="'request.success'|commonString" [searchable]="searchable"
+        [no-padding]="noPadding" [request-complete-text]="'request.success'|commonString"
+        [request-error-text]="'request.error' | commonString" [update-complete-text]="'request.success' | commonString"
+        [create-complete-text]="'request.success'|commonString" [title]="'title' | commonString : name"
+        [description]="'description' | commonString : name" [config]="config" [actions]="['update', 'delete', 'create']"
+        (action-error)="onActionError($event)" (action-result)="onActionResult($event)"
+        (performing-action)="onPerformingAction($event)" (detail-change)="onDetailChange($event)"
+        (form-error)="onFormError($event)" (form-changes)="onFormChanges($event)" (form-ready)="onFormReady($event)"
+        [delete-prompt]="'promt.delete' | commonString">
+
+        <!-- Header template reference -->
+        <ng-container *ngIf="headerRef">
+            <ng-template #header let-title="title" let-description="description" let-config="config" let-state="state">
+                <ng-container
+                    *ngTemplateOutlet="headerRef; context: {title, description, config, state}"></ng-container>
+            </ng-template>
+        </ng-container>
+
+        <!-- List view ref implementation -->
+        <ng-container *ngIf="listRef">
+            <ng-template #listView let-onRefreshDatagrid="onRefreshDatagrid" let-onCachedQuery="onCachedQuery"
+                let-onDgStateChanges="onDgStateChanges" let-dgState="dgState" let-actions="actions"
+                let-handleAction="handleAction" let-config="config">
+                <ng-container
+                    *ngTemplateOutlet="listRef; context: {onRefreshDatagrid, onCachedQuery, onDgStateChanges, dgState, actions, handleAction, config}"></ng-container>
+            </ng-template>
+        </ng-container>
+
+
+        <!-- Overflow reference -->
+        <ng-container *ngIf="overflowRef">
+            <ng-template #overflow let-item="item" let-actions="actions" let-handleAction="handleAction">
+                <ng-container
+                    *ngTemplateOutlet="overflowRef; context: {$implicit: item, item, actions, handleAction}"></ng-container>
+            </ng-template>
+        </ng-container>
+
+        <!-- Action bar template -->
+        <ng-container *ngIf="actionBarRef">
+            <ng-template #actionBar let-selected="selected" let-refresh="refresh" let-actions="actions"
+                let-handleAction="handleAction">
+                <ng-container
+                    *ngTemplateOutlet="actionBarRef; context: {$implicit: selected, selected, actions, handleAction}"></ng-container>
+            </ng-template>
+        </ng-container>
+
+        <!-- Detail Pane template -->
+        <ng-container *ngIf="detailPaneRef">
+            <ng-template #detailPane let-item>
+                <ng-container *ngTemplateOutlet="detailPaneRef; context: {$implicit: item, item}"></ng-container>
+            </ng-template>
+        </ng-container>
+
+        <!-- Before detail template -->
+        <ng-container *ngIf="beforeDetailRef">
+            <ng-template beforeDetail let-item>
+                <ng-container *ngTemplateOutlet="beforeDetailRef; context: {$implicit: item, item}"></ng-container>
+            </ng-template>
+        </ng-container>
+
+        <!-- After detail template -->
+        <ng-container *ngIf="afterDetailRef">
+            <ng-template afterDetail let-item>
+                <ng-container *ngTemplateOutlet="afterDetailRef; context: {$implicit: item, item}"></ng-container>
+            </ng-template>
+        </ng-container>
+    </ngx-data>
+
+    <!-- Place custom components as modals source code on the UI which are previewed to users on actions -->
+    <ng-content></ng-content>
+</ngx-view>

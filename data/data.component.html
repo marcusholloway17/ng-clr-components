@@ -1,0 +1,76 @@
+<div class="ui-content">
+    <!-- Data component template header-->
+    <ng-container
+        *ngTemplateOutlet="headerRef ?? defaultHeaderRef; context: {title, description, config, state}"></ng-container>
+    <div [ngClass]="{'data__no_padding': noPadding, 'data__padding': !noPadding}">
+        <ng-container *ngIf="config">
+            <ng-container *ngIf="!!config.datagrid && state.view === 'listView'">
+                <div @fadeInOut>
+                    <ng-container
+                        *ngTemplateOutlet="listRef ?? defaultListRef; context: {onRefreshDatagrid:onRefreshDatagrid.bind(this), onCachedQuery: onCachedQuery.bind(this), onDgStateChanges: onDgStateChanges.bind(this), dgState: state.dgState, actions: uiActions, handleAction: handleAction.bind(this), config}"></ng-container>
+                    <ng-template #defaultListRef let-onRefreshDatagrid="onRefreshDatagrid"
+                        let-onCachedQuery="onCachedQuery" let-onDgStateChanges="onDgStateChanges" let-dgState="dgState"
+                        let-actions="actions" let-handleAction="handleAction" let-config="config">
+                        <ngx-clr-data-list
+                            [show-detail-pane]="hasDetail || (!!config.datagrid.detail && config.datagrid.detail.length > 0)"
+                            [dg-state]="dgState" [url]="url" [config]="config" [refresh-text]="refreshText|commonString"
+                            [actions]="actions" [overflow]="overflowRef" [action-bar]="actionBarRef"
+                            [detail-pane]="detailPane ?? defaultDetailPane" [no-padding]="noPadding"
+                            [search-value]="search$|async" (refresh-grid)="onRefreshDatagrid($event)"
+                            (cached-query)="onCachedQuery($event)" (dgStateChange)="onDgStateChanges($event)"
+                            (action)="handleAction($event, config)"
+                            (detail-change)="detailPaneChange($event)"></ngx-clr-data-list>
+                    </ng-template>
+
+                    <!-- Detail Pane template -->
+                    <ng-template #defaultDetailPane let-item>
+                        <ng-container *ngIf="config.datagrid.detail ?? [] | asObservable | async as detailColumns">
+                            <ngx-data-detail [after-detail]="afterDetailRef" [before-detail]="beforeDetailRef"
+                                [data]="item" [columns]="detailColumns|asAny"></ngx-data-detail>
+                        </ng-container>
+                    </ng-template>
+                </div>
+            </ng-container>
+            <!-- Add form container implementation -->
+            <ng-container *ngIf="!!state.form && (state.view === 'createView' || state.view === 'editView')">
+                <div @fadeInOut>
+                    <ng-container
+                        *ngTemplateOutlet="formRef; context: {cancel: handleCancel.bind(this), form: state.form, selected: state.selected}"></ng-container>
+                    <ng-template #formRef let-cancel="cancel" let-form="form" let-selected="selected">
+                        <ngx-data-form #dataFormRef [value]="selected" [form]="form"
+                            [no-grid-layout]="config.form.noGridLayout ?? false" (changes)="handleFormChanges($event)"
+                            (error)="handleFormError($event)" (ready)="handleFormReady($event)"
+                            [url]="config.form.url ?? config.actions?.create?.url ?? url" [submit-text]="submitText"
+                            [cancel-text]="cancelText" [edit-text]="submitText" (cancel)="cancel($event)"
+                            (submit)="handleSubmit($event, config, state)"></ngx-data-form>
+                    </ng-template>
+                </div>
+            </ng-container>
+        </ng-container>
+    </div>
+
+</div>
+<ng-template #defaultHeaderRef let-title="title" let-description="description" let-config="config" let-state="state">
+    <!-- TODO: Add a flex box with row alignment to add the possibility to switch View layout -->
+    <ng-container *ngIf="config">
+        <div class="data__header" *ngIf="searchable || (title || description)">
+            <div class="data__header__flex">
+                <div class="data__header_content" *ngIf="description; else voidRef">
+                    <h1 class="data__title">{{ title }}</h1>
+                    <span class="data__description"> {{ description }}</span>
+                </div>
+                <ng-template #voidRef>
+                    <div class="data__header_content"></div>
+                </ng-template>
+                <ng-container *ngIf="searchable">
+                    <div class="search" *ngIf="!!config.datagrid && state.view === 'listView'">
+                        <div class="search-icon"></div>
+                        <!-- TODO: Use common string -->
+                        <input (input)="handleSearch($event)" id="search_input" type="text" placeholder="Rechercher...">
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+
+    </ng-container>
+</ng-template>

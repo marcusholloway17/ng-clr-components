@@ -1,0 +1,30 @@
+.applications.icon {
+  fill: var(--app-links--toggle-icon-color, #ffffffb5);
+  background-color: var(--app-links--toggle-icon-bg-color, transparent);
+}
+
+.dropdown__nav-link_item {
+  font-size: 0.8rem !important;
+  line-height: 1.8rem !important;
+  font-weight: 400 !important;
+  color: var(--dropdown-nav-item-color, #000) !important;
+  letter-spacing: normal;
+  border: 0;
+  cursor: pointer;
+  display: block;
+  margin: 0;
+  width: 100%;
+  text-transform: none;
+  text-align: left;
+  text-decoration: none;
+  padding: 0 0.6rem 0 1.2rem;
+}
+
+.dropdown__nav-link_item:hover {
+  border-bottom: none;
+  background-color: var(
+    --dropdown-nav-item-hover-bg-color,
+    hsl(198, 100%, 24%)
+  ) !important;
+  color: var(--dropdown-nav-item-hover-color, #fff) !important;
+}

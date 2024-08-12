@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+:host .action-alert {
+    display: block;
+    min-height: 59px;
+    width: 428px;
+    max-width: 480px;
+    margin-top: 4px;
+    margin-right: 4px;
+}
+
+:host .action-alert.app-level {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: var(--action-alert-z-index, 1052);
+    box-shadow: 0 .05rem 0 var(--action-alert-box-shadow-color, hsl(0, 0%, 24%));
+}
+
+.action-alert {
+    padding: .3rem 0rem;
+    border-radius: var(--action-alert-border-radius, 0);
+    border-width: var(--action-alert-border-width, 0);
+    border-style: solid;
+}
+
+.action-alert-items {
+    display: flex;
+    flex: 1 1 auto;
+    flex-flow: column nowrap;
+    padding: var(--action-alert-padding, 0.5rem 1rem);
+}
+
+.action-alert-items>.action-alert-item {
+    flex: 1 1 auto;
+    display: flex;
+    flex-wrap: nowrap;
+    min-height: 0.9rem;
+    margin-bottom: 0;
+}
+
+.action-alert-item span,
+span,
+.action-alert-item p,
+p {
+    display: inline-block;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 98%;
+    max-width: 98%;
+    margin-right: 0.6rem;
+    text-align: left;
+    font-weight: 400;
+    font-size: 0.8rem;
+}
+
+.action-alert.warning.light {
+    background: var(--action-alert-warning-light-bg-color, #fff4c7);
+    color: var(--action-alert-light-font-color, #333333);
+    border-color: var(--action-alert-warning-light-border-color, #ad7600);
+}
+
+.action-alert.default.light {
+    background: var(--action-alert-default-light-bg-color, #e3f5fc);
+    color: var(--action-alert-light-font-color, #666666);
+    border-color: var(--action-alert-default-light-border-color, #00567a);
+}
+
+.action-alert.danger.light {
+    background: var(--action-alert-danger-light-bg-color, #feddd7);
+    color: var(--action-alert-light-font-color, #666666);
+    border-color: var(--action-alert-danger-light-border-color, #991700);
+}
+
+.action-alert.success.light {
+    background: var(--action-alert-success-light-bg-color, #dff0d0);
+    color: var(--action-alert-light-font-color, #666666);
+    border-color: var(--action-alert-success-light-border-color, #306b00);
+}
+
+.action-alert.success {
+    background: var(--action-alert-success-bg-color, #00b35d);
+    color: var(--action-alert-font-color, #fff);
+    border-color: var(--action-alert-success-border-color, #00b35d);
+}
+
+.action-alert.success.light svg>path,
+.action-alert.danger.light svg>path,
+.action-alert.default.light svg>path,
+.action-alert.warning.light svg>path {
+    color: var(--action-alert-light-font-color, #666666);
+    fill: var(--action-alert-light-font-color, #666666);
+}
+
+.action-alert.warning {
+    background: var(--action-alert-warning-bg-color, hsl(26deg, 100%, 38%));
+    color: var(--action-alert-font-color, #fff);
+    border-color: var(--action-alert-warning-border-color,
+            hsl(26deg, 100%, 38%));
+}
+
+.action-alert.default {
+    background: var(--action-alert-default-bg-color, hsl(198deg, 100%, 32%));
+    color: var(--action-alert-font-color, #fff);
+    border-color: var(--action-alert-default-border-color,
+            hsl(198deg, 100%, 32%));
+}
+
+.action-alert.danger {
+    background: var(--action-alert-danger-bg-color, #ff5353);
+    color: var(--action-alert-font-color, #fff);
+    border-color: var(--action-alert-danger-border-color, #ff5353);
+}
+
+
+.action-alert.success svg>path,
+.action-alert.danger svg>path,
+.action-alert.default svg>path,
+.action-alert.warning svg>path {
+    color: var(--action-alert-font-color, #fff);
+    fill: var(--action-alert-font-color, #fff);
+}
+
+.action-alert svg {
+    cursor: pointer;
+}

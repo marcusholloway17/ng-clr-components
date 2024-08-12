@@ -1,0 +1,21 @@
+<div class="dat__form__content" *ngIf="form">
+    <ngx-smart-form #formRef [no-grid-layout]="noGridLayout" (ready)="handleReady($event)"
+        (changes)="handleChanges($event)" (error)="handleError($event)" [submitable]="submitable"
+        [autoupload]="autoupload" (submit)="handleSubmit($event)" [form]="form" [autoSubmit]="false"
+        [template]="controlTemplate">
+        <ng-template #controlTemplate let-config="value" let-control="control">
+            <ngx-clr-form-control class="ngx-smart-form-control" [hidden]="config.hidden" [control]="control"
+                [inputConfig]="config"></ngx-clr-form-control>
+        </ng-template>
+        <ng-template #submitButton let-handler>
+            <button class="btn btn-primary" (click)="handler($event)">
+                <!-- TODO: Add a submit action icon -->
+                {{ submitText }}
+            </button>
+            <button class="btn btn-primary btn-danger" (click)="handleCancel($event)">
+                <!-- TODO: Add a cancel action icon -->
+                {{ cancelText }}
+            </button>
+        </ng-template>
+    </ngx-smart-form>
+</div>
